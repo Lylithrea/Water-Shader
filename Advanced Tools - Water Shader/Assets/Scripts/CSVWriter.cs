@@ -86,7 +86,6 @@ public class CSVWriter : MonoBehaviour
             currentData.NormalWaveBias + "," + currentData.BigNormalWaveTiling + "," + currentData.SmallNormalWaveTiling + "," +
             currentData.WaveBias + "," + currentData.BigWaveMovementScale + "," + currentData.SmallWaveMovementScale + "," +
             currentData.WaveSpeed + "," + currentData.WaveStrength + "," + currentData.WaveColourSharpness + "," + currentData.WaveFoamCutoff);
-        //tw.WriteLine(data.fps + "," + .data[i].vertices + "," + myDataList.data[i].waterHeight + "," + myDataList.data[i].waterScale);
         tw.Close();
     }
 
