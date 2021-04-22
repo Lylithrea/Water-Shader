@@ -16,6 +16,7 @@ To get the results, either press play within unity editor or play the build, onc
 Once done it should output an excel file to the assets folder. 
 If you start the test with the same name it will overwrite the previous file, thus deleting everything from the previous test.
 
-
+![image](https://user-images.githubusercontent.com/51161758/115778184-8e32c780-a3b6-11eb-9e96-7d9494ab3b62.png)
 
 Unity version: 2020.1.14f1
+
