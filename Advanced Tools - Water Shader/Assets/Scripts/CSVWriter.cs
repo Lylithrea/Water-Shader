@@ -18,21 +18,10 @@ public class CSVWriter : MonoBehaviour
     public int WaveStrengthEnd;
     public int WaveStrengthCurrent;
 
-    public float WaveBiasSteps;
-    public float WaveBiasStart;
-    public float WaveBiasEnd;
-    public float WaveBiasCurrent;
-
     public float BigTilingSteps;
     public float BigTilingStart;
     public float BigTilingEnd;
     public float BigTilingCurrent;
-
-    public float SmallTilingSteps;
-    public float SmallTilingStart;
-    public float SmallTilingEnd;
-    public float SmallTilingCurrent;
-
 
     public Material waterShader;
     public GameObject waterPlane;
@@ -106,57 +95,6 @@ public class CSVWriter : MonoBehaviour
     int index2 = 0;
     public void ProcessData()
     {
-/*        if (currentTimer <= 0)
-        {
-            if (index < ((BigTilingEnd - BigTilingStart) / BigTilingSteps))
-            {
-                currentTimer = waitTimer;
-                waterShader.SetFloat("Vector1_E5FFDB07", BigTilingCurrent);
-                BigTilingCurrent += BigTilingSteps;
-                GetShaderValues();
-                WriteCSV();
-                index++;
-            }
-            if (index == (BigTilingEnd - BigTilingStart) / BigTilingSteps)
-            {
-                index = 0;
-                isTesting = false;
-            }
-
-        }
-        else
-        {
-            currentTimer--;
-            float frameDuration = Time.unscaledDeltaTime;
-            frames += 1;
-            duration += frameDuration;
-        }*/
-
-        /*if (currentTimer <= 0)
-        {
-            if (index2 < ((WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps))
-            {
-                currentTimer = waitTimer;
-                waterShader.SetFloat("Vector1_A81C3C11", WaveStrengthCurrent);
-                WaveStrengthCurrent -= WaveStrengthSteps;
-                GetShaderValues();
-                WriteCSV();
-                index2++;
-            }
-            if (index2 == (WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps)
-            {
-                index2 = 0;
-                isTesting = false;
-            }
-
-        }
-        else
-        {
-            currentTimer--;
-            float frameDuration = Time.unscaledDeltaTime;
-            frames += 1;
-            duration += frameDuration;
-        }*/
 
         if (currentTimer <= 0)
         {
