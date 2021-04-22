@@ -1,0 +1,4 @@
+Fps,Vertices,Metallic,Smoothness,ShallowWaterDepth,DeepWaterDepth,RefractionScale,RefractionSpeed,RefractionStrength,FoamScale,FoamAmount,FoamCutoff,FoamSpeed,NormalWaveBias,BigNormalWaveTiling,SmallNormalWaveTiling,WaveBias,BigWaveMovementScale,SmallWaveMovementScale,WaveSpeed,WaveStrength,WaveColourSharpness,WaveFoamCutoff
+101,263169,0.92,0.75,5,10,3,0.05,0.5,170,1,2,1,0.5,4,7,0.5,1,2,0.1,1500,1,0.7
+94,263169,0.92,0.75,5,10,3,0.05,0.5,170,1,2,1,0.5,4,7,0.5,1,2,0.1,1500,1,0.7
+103,263169,0.92,0.75,5,10,3,0.05,0.5,170,1,2,1,0.5,4,7,0.5,1,2,0.1,1500,1,0.7

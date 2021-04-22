@@ -5,7 +5,35 @@ using System.IO;
 
 public class CSVWriter : MonoBehaviour
 {
+    public string file;
     string filename = "";
+
+    public bool isTesting = false;
+
+    public int waitTimer;
+    public int currentTimer;
+
+    public int WaveStrengthSteps;
+    public int WaveStrengthStart;
+    public int WaveStrengthEnd;
+    public int WaveStrengthCurrent;
+
+    public float WaveBiasSteps;
+    public float WaveBiasStart;
+    public float WaveBiasEnd;
+    public float WaveBiasCurrent;
+
+    public float BigTilingSteps;
+    public float BigTilingStart;
+    public float BigTilingEnd;
+    public float BigTilingCurrent;
+
+    public float SmallTilingSteps;
+    public float SmallTilingStart;
+    public float SmallTilingEnd;
+    public float SmallTilingCurrent;
+
+
     public Material waterShader;
     public GameObject waterPlane;
 
@@ -52,7 +80,7 @@ public class CSVWriter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       filename = Application.dataPath + "/result.csv";
+       filename = Application.dataPath + "/"+ file + ".csv";
         TextWriter tw = new StreamWriter(filename, false);
         tw.WriteLine("Fps,Vertices," +
             "Metallic,Smoothness,ShallowWaterDepth,DeepWaterDepth," +
@@ -62,16 +90,141 @@ public class CSVWriter : MonoBehaviour
             "WaveBias,BigWaveMovementScale,SmallWaveMovementScale," +
             "WaveSpeed,WaveStrength,WaveColourSharpness,WaveFoamCutoff");
         tw.Close();
+        SetupVariables();
+    }
+
+    private void SetupVariables()
+    {
+        currentTimer = waitTimer;
+        WaveStrengthCurrent = WaveStrengthStart;
+        BigTilingCurrent = BigTilingStart;
+        waterShader.SetFloat("Vector1_A81C3C11", WaveStrengthCurrent);
+        waterShader.SetFloat("Vector1_E5FFDB07", BigTilingCurrent);
+    }
+
+    int index = 0;
+    int index2 = 0;
+    public void ProcessData()
+    {
+/*        if (currentTimer <= 0)
+        {
+            if (index < ((BigTilingEnd - BigTilingStart) / BigTilingSteps))
+            {
+                currentTimer = waitTimer;
+                waterShader.SetFloat("Vector1_E5FFDB07", BigTilingCurrent);
+                BigTilingCurrent += BigTilingSteps;
+                GetShaderValues();
+                WriteCSV();
+                index++;
+            }
+            if (index == (BigTilingEnd - BigTilingStart) / BigTilingSteps)
+            {
+                index = 0;
+                isTesting = false;
+            }
+
+        }
+        else
+        {
+            currentTimer--;
+            float frameDuration = Time.unscaledDeltaTime;
+            frames += 1;
+            duration += frameDuration;
+        }*/
+
+        /*if (currentTimer <= 0)
+        {
+            if (index2 < ((WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps))
+            {
+                currentTimer = waitTimer;
+                waterShader.SetFloat("Vector1_A81C3C11", WaveStrengthCurrent);
+                WaveStrengthCurrent -= WaveStrengthSteps;
+                GetShaderValues();
+                WriteCSV();
+                index2++;
+            }
+            if (index2 == (WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps)
+            {
+                index2 = 0;
+                isTesting = false;
+            }
+
+        }
+        else
+        {
+            currentTimer--;
+            float frameDuration = Time.unscaledDeltaTime;
+            frames += 1;
+            duration += frameDuration;
+        }*/
+
+        if (currentTimer <= 0)
+        {
+
+            if ((index < ((BigTilingEnd - BigTilingStart) / BigTilingSteps)) )
+            {
+                
+
+                if (index2 == 0)
+                {
+                    index++;
+                    waterShader.SetFloat("Vector1_E5FFDB07", BigTilingCurrent);
+                    BigTilingCurrent += BigTilingSteps;
+                }
+
+                if (index2 < ((WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps))
+                {
+                    currentTimer = waitTimer;
+                    waterShader.SetFloat("Vector1_A81C3C11", WaveStrengthCurrent);
+                    WaveStrengthCurrent -= WaveStrengthSteps;
+                    GetShaderValues();
+                    WriteCSV();
+                    index2++;
+                }
+                if(index2 == ((WaveStrengthStart - WaveStrengthEnd) / WaveStrengthSteps))
+                {
+                    index2 = 0;
+                    WaveStrengthCurrent = WaveStrengthStart;
+                }
+            }
+
+            if (index == ((BigTilingEnd - BigTilingStart) / BigTilingSteps))
+            {
+                index = 0;
+                isTesting = false;
+            }
+        }
+        else
+        {
+            currentTimer--;
+            float frameDuration = Time.unscaledDeltaTime;
+            frames += 1;
+            duration += frameDuration;
+        }
+
+    }
+    float delta = 0;
+    public void WriteData()
+    {
+        delta += Time.deltaTime;
+        delta /= 2;
+        fps = 1 / delta;
+        frames = 0;
+        duration = 0;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         FPSCounter();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isTesting)
         {
-            GetShaderValues();
-            WriteCSV();
+            isTesting = true;
+        }
+        if (isTesting)
+        {
+            ProcessData();
         }
     }
 
@@ -79,7 +232,7 @@ public class CSVWriter : MonoBehaviour
     {
         TextWriter tw = new StreamWriter(filename, true);
         Data currentData = GetShaderValues();
-        tw.WriteLine(fps + "," + waterPlane.GetComponent<MeshFilter>().mesh.vertices.Length + "," +
+        tw.WriteLine((int)fps + "," + waterPlane.GetComponent<MeshFilter>().mesh.vertices.Length + "," +
             currentData.Metallic + "," + currentData.Smoothness + "," + currentData.ShallowWaterDepth + "," + currentData.DeepWaterDepth + "," +
             currentData.RefractionScale + "," + currentData.RefractionSpeed + "," + currentData.RefractionStrength + "," +
             currentData.FoamScale + "," + currentData.FoamAmount + "," + currentData.FoamCutoff + "," + currentData.FoamSpeed + "," +
